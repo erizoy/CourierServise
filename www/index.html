@@ -1,0 +1,29 @@
+<html>     
+	<title>Order form</title>  
+	<HEAD> <link rel="icon" href="/favicon.ico" type="image/x-icon">
+		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">  </HEAD>          
+	<body>
+		<form action="action.php" name="myform" method="post">
+			 Enter your information </br>
+			 Name:
+			 <input type="text" name="txtName" size="10" maxlength="25" value=""> </br>
+			 Phone:
+			 <input type="text" name="txtPhone" size="10" maxlength="10" value=""> </br>
+			 Order:
+			 <input type="text" name="txtOrder" size="10" maxlength="25" value=""> </br>
+			 From:
+			 <input type="text" name="txtFrom" size="10" maxlength="35" value=""> </br>
+			 To:
+			 <input type="text" name="txtTo" size="10" maxlength="35" value=""> </br>
+			 Delivery type:
+			 <select name="slcType" size="1">
+				<option value="first">Fast</option>
+				<option selected="selected" value="second">Normal</option>
+				<option value="third">Cheap</option>
+			</select> </br>
+			<input type="submit" name="btnSubmit" value="Send order">
+			<input type="reset" name="btnClear" value="Clear form">
+		</form>
+  </body>                  
+  
+</html>
