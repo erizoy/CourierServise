@@ -1,29 +1,169 @@
-<html>     
-	<title>Order form</title>  
-	<HEAD> <link rel="icon" href="/favicon.ico" type="image/x-icon">
-		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">  </HEAD>          
-	<body>
-		<form action="action.php" name="myform" method="post">
-			 Enter your information </br>
-			 Name:
-			 <input type="text" name="txtName" size="10" maxlength="25" value=""> </br>
-			 Phone:
-			 <input type="text" name="txtPhone" size="10" maxlength="10" value=""> </br>
-			 Order:
-			 <input type="text" name="txtOrder" size="10" maxlength="25" value=""> </br>
-			 From:
-			 <input type="text" name="txtFrom" size="10" maxlength="35" value=""> </br>
-			 To:
-			 <input type="text" name="txtTo" size="10" maxlength="35" value=""> </br>
-			 Delivery type:
-			 <select name="slcType" size="1">
-				<option value="first">Fast</option>
-				<option selected="selected" value="second">Normal</option>
-				<option value="third">Cheap</option>
-			</select> </br>
-			<input type="submit" name="btnSubmit" value="Send order">
-			<input type="reset" name="btnClear" value="Clear form">
-		</form>
-  </body>                  
-  
-</html>
+<html>
+    <head>
+	<meta http-equiv="Content-Type" content="text/html; charset=windows-1251" />
+	<title>Courier service</title>
+	<script type="text/javascript" src="http://yeap.narod.ru/global/js/jquery-1.1.3.1.min.js"></script>	<!-- google maps api scipt-->
+	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script> <!-- google maps api scipt-->
+	<script type="text/javascript" src="index_actions.js"></script> 
+	<link rel="stylesheet"  type="text/css" href="form.css" /> 
+	<link rel="icon" href="/favicon.ico" type="image/x-icon">
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"> 
+	    
+    </head>
+    <body background="http://www.dvd-ppt-slideshow.com/images/ppt-background/background-3.jpg">
+		<a href="#" id="click-order">Take order</a>
+        <div class="overlay" id="overlay" style="display:none;"></div> 
+        <div class="orderbox" id="orderbox">
+            <a class="order-close" id="order-close" href="#"></a> 
+            <h1>Take order</h1>
+			<form action="action.php" name="orderform" method="post">
+				Enter your information </br>
+				<table style="color: #666">
+					<tr>
+						<td align="right">Surname:</td>
+						<td><input type="text" name="txtSurname" size="10" maxlength="25" value=""></td>
+					</tr>
+					<tr>
+						<td align="right">Name:</td>
+						<td><input type="text" name="txtName" size="10" maxlength="25" value=""></td>
+					</tr>
+					<tr>
+						<td align="right">Phone: +7</td>
+						<td><input type="text" name="txtPhone" onkeydown = "javascript: return ((event.keyCode>7)&&(event.keyCode<58))" size="10" maxlength="10" value=""></td>
+					</tr>
+					<tr>
+						<td align="right">Order:</td>
+						<td><input type="text" name="txtOrder" size="10" maxlength="25" value=""></td> 
+					</tr>
+					<tr>
+						<td valign="top" align="right">Points:</td>
+						<td><input type='hidden' name='locFrom' id='locFrom'>
+							<input type='hidden' name='locTo' id='locTo'>
+							<div id="ymaps-map-container" style="width: 450px; height: 350px;"></div>
+							<div style="width: 450px; text-align: right;"></div>
+							<script type="text/javascript" src="http://api-maps.yandex.ru/2.0/?coordorder=longlat&load=package.full&lang=ru-RU"></script>
+							<script type="text/javascript"> ymaps.ready(function(){
+															var map = new ymaps.Map("ymaps-map-container", 
+																					{center: [39.19232625390624, 51.6599108320899], 
+																					zoom: 12, 
+																					type: "yandex#map"});
+															map.controls.add("zoomControl").add("mapTools").add(new ymaps.control.TypeSelector(["yandex#map", 
+																																				"yandex#satellite", 
+																																				"yandex#hybrid", 
+																																				"yandex#publicMap"]));	
+															left = 0;
+															right = 0;
+															map.events.add('click', function (e){
+															if (left == 0){
+																left++;
+																var coordsFrom = e.get('coordPosition');
+																fromMark = new ymaps.Placemark(coordsFrom, {
+																iconContent: 'From',
+																hintContent:[coordsFrom[0].toPrecision(16),
+																			coordsFrom[1].toPrecision(16)].join(', ')
+																}, {
+																preset: 'twirl#blueStretchyIcon'
+																   });
+																map.geoObjects.add(fromMark)
+																document.getElementById('locFrom').value = [coordsFrom[0].toPrecision(16),
+																										coordsFrom[1].toPrecision(16)].join(', ');
+															}
+															else if (left == 1)
+															{
+																map.geoObjects.remove(fromMark);
+																var coordsFrom = e.get('coordPosition');
+																fromMark = new ymaps.Placemark(coordsFrom, {
+																iconContent: 'From',
+																hintContent:[coordsFrom[0].toPrecision(16),
+																			coordsFrom[1].toPrecision(16)].join(', ')
+																}, {
+																preset: 'twirl#blueStretchyIcon'
+																   });
+																map.geoObjects.add(fromMark)
+																document.getElementById('locFrom').value = [coordsFrom[0].toPrecision(16),
+																										coordsFrom[1].toPrecision(16)].join(', ');
+															}
+															});
+															map.events.add('contextmenu', function (e){
+															if (right == 0){
+																right++;
+																var coordsTo = e.get('coordPosition');
+																toMark = new ymaps.Placemark(coordsTo, {
+																iconContent: 'To',
+																hintContent:[coordsTo[0].toPrecision(16),
+																			coordsTo[1].toPrecision(16)].join(', ')
+																}, {
+																preset: 'twirl#greenStretchyIcon'
+																   });
+																map.geoObjects.add(toMark);
+																document.getElementById('locTo').value = [coordsTo[0].toPrecision(16),
+																										coordsTo[1].toPrecision(16)].join(', ');
+															}
+															else if (right == 1)
+															{
+																map.geoObjects.remove(toMark);
+																var coordsTo = e.get('coordPosition');
+																toMark = new ymaps.Placemark(coordsTo, {
+																iconContent: 'To',
+																hintContent:[coordsTo[0].toPrecision(16),
+																			coordsTo[1].toPrecision(16)].join(', ')
+																}, {
+																preset: 'twirl#greenStretchyIcon'
+																   });
+																map.geoObjects.add(toMark);
+																document.getElementById('locTo').value = [coordsTo[0].toPrecision(16),
+																										coordsTo[1].toPrecision(16)].join(', ');
+															}
+															});
+																				  });															
+																				  </script>
+						</td>
+					</tr>
+					<tr>
+						<td align="right">Delivery type:</td>
+						<td colspan="1"> <select name="slcType" size="1">
+							<option value="Fast">Fast</option>
+							<option selected="selected" value="Normal">Normal</option>
+							<option value="Cheap">Cheap</option>
+						</select></td>
+					</tr>
+					<tr>
+						<td align="right">
+							<input type="submit" name="btnSubmit" value="Send order">
+						</td>
+						<td>
+							<input type="reset" name="btnClear" value="Clear form">	
+						</td>
+					</tr>
+				</table> 
+			</form>
+        </div> 
+		
+		</br>
+		<a href="#" id="click-sign" >Sign in</a>
+        <div class="overlay" id="overlay" style="display:none;"></div> 
+        <div class="signbox" id="signbox">
+            <a class="sign-close" id="sign-close" href="#"></a> 
+            <h1>Sign in</h1>
+			<form action="signin.php" name="signform" method="post">
+					<table style="color: #666">
+						<tr>
+							<td align="right">Login:</td>
+							<td><input type="text" name="txtLogin" size="10" maxlength="25" value=""></td>
+						</tr>
+						<tr>
+							<td align="right">Password:</td>
+							<td><input type="password" name="txtPass" size="10" maxlength="25" value=""></td>
+						</tr>
+						<tr>
+						<td align="right">
+							<input type="submit" name="btnSign" value="Sign in">
+						</td>
+						<td>
+							<input type="reset" name="btnClear" value="Clear">	
+						</td>
+					</tr>
+					</table>
+		</div>
+	</body>
+</html>	
