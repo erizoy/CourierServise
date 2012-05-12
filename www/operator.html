@@ -1,0 +1,46 @@
+<html>
+    <head>
+	<meta http-equiv="Content-Type" content="text/html; charset=windows-1251" />
+	<title>Operator</title>
+	<link rel="stylesheet"  type="text/css" href="form.css" /> 
+	<link rel="icon" href="/favicon.ico" type="image/x-icon">
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"> 
+	    
+    </head>
+    <body>
+		<form action="select.php" name="selector_form" method="post">
+			Select, what fields you will use <br>
+			<input type="checkbox" name="select[]" value="`customer`" onchange='document.getElementById("div_customer").hidden=!this.checked;'/> Customer <br>
+			<div id="div_customer" hidden>
+				&nbsp <input type="checkbox" name="selector[]" value="`customer`.`id_customer`"/> id_customer <br>
+				&nbsp <input type="checkbox" name="selector[]" value="`customer`.`name`, `surname`"> Name, surname <br>
+				&nbsp <input type="checkbox" name="selector[]" value="`customer`.`phone`"/> Phone <br>
+			</div>
+			<input type="checkbox" name="select[]" value="`courier`" onchange='document.getElementById("div_courier").hidden=!this.checked;'/> Courier <br>
+			<div id="div_courier" hidden>
+				&nbsp <input type="checkbox" name="selector[]" value="`courier`.`id_courier`"/> id_courier <br>
+				&nbsp <input type="checkbox" name="selector[]" value="`courier`.`name`, `surname`"/> Name, surname <br>
+				&nbsp <input type="checkbox" name="selector[]" value="`courier`.`place`"/> Place <br>
+			</div>
+			<input type="checkbox" name="select[]" value="`operator`" onchange='document.getElementById("div_operator").hidden=!this.checked;'/> Operator <br>
+			<div id="div_operator" hidden>
+				&nbsp <input type="checkbox" name="selector[]" value="`operator`.`id_operator`"/> id_operator <br>
+				&nbsp <input type="checkbox" name="selector[]" value="`operator`.`name`, `surname`"/> Name, surname <br>
+			</div>
+			<input type="checkbox" name="select[]" value="`order`" onchange='document.getElementById("div_order").hidden=!this.checked;'/> Order <br>
+			<div id="div_order" hidden>
+				&nbsp <input type="checkbox" name="selector[]" value="`order`.`id_order`"/> id_order <br>
+				&nbsp <input type="checkbox" name="selector[]" value="`order`.`id_customer`"/> id_customer <br>
+				&nbsp <input type="checkbox" name="selector[]" value="`order`.`id_operator`"/> id_operator <br>
+				&nbsp <input type="checkbox" name="selector[]" value="`order`.`id_courier`"/> id_courier <br>
+				&nbsp <input type="checkbox" name="selector[]" value="`order`.`order_name`"/> Order name <br>
+				&nbsp <input type="checkbox" name="selector[]" value="`order`.`delivery_type`"/> Delivery type <br>
+				&nbsp <input type="checkbox" name="selector[]" value="`order`.`adress_from`, `adress_to`"/> Adresses <br>
+			</div>
+			<input type="submit" name="querySubmit" value="submit"/>
+		</form>
+         
+</form>
+
+	</body>
+</html>	

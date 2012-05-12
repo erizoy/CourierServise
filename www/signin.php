@@ -1,12 +1,12 @@
 <?php
-	$host='sql-4.radyx.ru:3306'; // имя хоста (уточняется у провайдера)
-	$database='courier614'; // имя базы данных, которую вы должны создать
-	$user='courier614'; // заданное вами имя пользователя, либо определенное провайдером
-	$pswd='swki6qr256'; // заданный вами пароль
+	$host='sql-4.radyx.ru:3306'; // РёРјСЏ С…РѕСЃС‚Р° (СѓС‚РѕС‡РЅСЏРµС‚СЃСЏ Сѓ РїСЂРѕРІР°Р№РґРµСЂР°)
+	$database='courier614'; // РёРјСЏ Р±Р°Р·С‹ РґР°РЅРЅС‹С…, РєРѕС‚РѕСЂСѓСЋ РІС‹ РґРѕР»Р¶РЅС‹ СЃРѕР·РґР°С‚СЊ
+	$user='courier614'; // Р·Р°РґР°РЅРЅРѕРµ РІР°РјРё РёРјСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ, Р»РёР±Рѕ РѕРїСЂРµРґРµР»РµРЅРЅРѕРµ РїСЂРѕРІР°Р№РґРµСЂРѕРј
+	$pswd='swki6qr256'; // Р·Р°РґР°РЅРЅС‹Р№ РІР°РјРё РїР°СЂРѕР»СЊ
 	//$link = mysql_connect('sql-4.radyx.ru:3306', 'courier614', 'swki6qr256');
 	//mysql_select_db('courier614', $link);
-	$dbh = mysql_connect($host, $user, $pswd) or die("Не могу соединиться с MySQL.");
-	mysql_select_db($database) or die("Не могу подключиться к базе.");
+	$dbh = mysql_connect($host, $user, $pswd) or die("Can't connect to  MySQL.");
+	mysql_select_db($database) or die("Can't connect to data base.");
 	
 
 	if (empty($_POST['txtLogin']))
@@ -31,26 +31,32 @@
 			$row = mysql_fetch_assoc($query);
 			$_SESSION['id_operator'] = $row['id_operator'];
 			session_start();
-			$list = '';
-			$sql = mysql_query("SELECT `order`.`id_order`,
-									   `order`.`order_name`,
-									   `order`.`adress_from`,
-									   `order`.`adress_to`,
-									   `order`.`delivery_type`,
-									   `courier`.`id_courier`,
-									   `courier`.`surname`,
-									   `courier`.`name`,
-									   `courier`.`place`
-								FROM `order`, `courier`
-								WHERE `order`.`id_courier` IS NOT NULL
-								AND `courier`.`id_courier` = `order`.`id_courier`" ) or die(mysql_error());
-			$table = "<table>\n";
+			mysql_close();
+			header("Location:operator.html");
+		}
+	}
+			/*
+			$query = mysql_query($sql) or die(mysql_error());
+			
+                        $n = 1;
+			$table = "<table rules=all>\n
+                                     <tr>
+                                        <td>N</td>
+                                        <td>Order ID</td>
+                                        <td>Order name</td>
+                                        <td>Courier Name</td>
+                                        <td>Courier ID</td>
+                                        <td>Adress from</td>
+                                        <td>Adress to</td>
+                                        <td>Delivery type</td>
+                                        <td>Courier place</td>
+                                     </tr>";
 			while($row = mysql_fetch_assoc($sql))
 			{
 				$table .= "<tr>\n";
+				$table .= "<td>".$n++."</td>\n";
 				$table .= "<td>".$row['id_order']."</td>\n";
 				$table .= "<td>".$row['order_name']."</td>\n";
-				$table .= "<td>".$row['surname']."</td>\n";
 				$table .= "<td>".$row['name']."</td>\n";
 				$table .= "<td>".$row['id_courier']."</td>\n";
 				$table .= "<td>".$row['adress_from']."</td>\n";
@@ -66,5 +72,5 @@
 		{
 			die('Access denided.');
 		}
-	}
-?>
+	} */
+?>	
